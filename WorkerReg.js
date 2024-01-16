@@ -9,8 +9,11 @@ const Workerschema=new mongoose.Schema(
     job:String,
     experience:String,
     location:String,
+    image1:{
+        data : Buffer,
+        contentType:String,
     
-    
+    }
     
 
 });

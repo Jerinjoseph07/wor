@@ -1,0 +1,20 @@
+// const mongoose=require("mongoose")
+// mongoose.connect("mongodb+srv://jerin:jerin@cluster0.otjnv5c.mongodb.net/clientReg?retryWrites=true&w=majority")
+// .then(()=>{console.log("DB connuct")})
+// .catch(err=>console.log(err));
+// const Clientschema=new mongoose.Schema(
+//     {
+//     name:String,
+//     phone:Number,
+    
+//     location:String,
+//     image1:{
+//         data : Buffer,
+//         contentType:String,
+    
+//     }
+    
+
+// });
+// var Clientmodel=mongoose.model("ClientReg",Clientschema)
+// module.exports=Clientmodel;
