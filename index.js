@@ -4,7 +4,8 @@ const cors=require("cors")
 const Workermodel=require('./WorkerReg')
 
 const multer = require('multer');
-// const Clientmodel = require("./ClientReg");
+const Clientmodel = require("./ClientReg");
+
 const storage = multer.memoryStorage(); // Store images in memory
 const upload = multer({ storage: storage })
 app.use(express.urlencoded({extended:true}))
@@ -23,21 +24,17 @@ app.get('/view', async (request, response) => {
     response.send(data)
 })
 
-    // app.get('/cview', async (request, response) => {
-    //     var data = await Clientmodel.find();
-    //     console.log(data)
-    //     response.send(data)
-    // })
+    app.get('/cview', async (request, response) => {
+        var data = await Clientmodel.find();
+        console.log(data)
+        response.send(data)
+    })
 
-// app.put('/edit/:id',async(request,response)=>{
-//     let id=request.params.id
-//     await studentmodel.findByIdAndUpdate(id.request.body)
-//     response.send("Data updated")
-// })
+
 
 app.put('/edit/:id',async (request, response) => {
     let id = request.params.id;
-    await Workertmodel.findByIdAndUpdate(id,request.body)
+    await Workermodel.findByIdAndUpdate(id,request.body)
     response.send("Data updated")
 })
 
@@ -71,28 +68,28 @@ app.post('/new',upload.single('image1'),async (request,response) => {
 
 })
 
-// app.post('/cnew',upload.single('image1'),async (request,response) => {
-//     try {
-//         const { name, phone, location } = request.body
-//         const newdata = new Clientmodel({
-//             name, phone, location,
-//             image1: {
-//                 data:request.file.buffer,
-//                 contentType: request.file.mimetype,}
-//         })
-//         console.log(newdata);
-//         await newdata.save();
-//         response.status(300).json({ message: 'Record saved' });
+app.post('/cnew',upload.single('image1'),async (request,response) => {
+    try {
+        const { name, phone, location } = request.body
+        const newdata = new Clientmodel({
+            name, phone, location,
+            image1: {
+                data:request.file.buffer,
+                contentType: request.file.mimetype,}
+        })
+        console.log(newdata);
+        await newdata.save();
+        response.status(300).json({ message: 'Record saved' });
 
-//     }
-//     catch (error) {
-//         response.status(500).json({ error: 'Internal Server Error' });
+    }
+    catch (error) {
+        response.status(500).json({ error: 'Internal Server Error' });
 
-//     }
+    }
 
     
 
-// })
+})
 
 
 
