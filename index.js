@@ -5,6 +5,7 @@ const Workermodel=require('./WorkerReg')
 
 const multer = require('multer');
 const Clientmodel = require("./ClientReg");
+const data2model=require("./adminlog");
 
 const storage = multer.memoryStorage(); // Store images in memory
 const upload = multer({ storage: storage })
@@ -20,13 +21,13 @@ app.get('/', (request,response) => {
 })
 app.get('/view', async (request, response) => {
     var data = await Workermodel.find();
-    console.log(data)
+    // console.log(data)
     response.send(data)
 })
 
     app.get('/cview', async (request, response) => {
         var data = await Clientmodel.find();
-        console.log(data)
+        // console.log(data)
         response.send(data)
     })
 
@@ -36,14 +37,10 @@ app.put('/edit/:id',async (request, response) => {
     let id = request.params.id;
     await Workermodel.findByIdAndUpdate(id,request.body)
     response.send("Data updated")
+
 })
 
-// app.post('/new',(request,response)=>{
-//     console.log(request.body)
-//     new studentmodel(request.body).save();
-//     response.send("records saved")
 
-// })
 
 app.post('/new',upload.single('image1'),async (request,response) => {
     try {
@@ -54,9 +51,9 @@ app.post('/new',upload.single('image1'),async (request,response) => {
                 data:request.file.buffer,
                 contentType: request.file.mimetype,}
         })
-        console.log(newdata);
+        // console.log(newdata);
         await newdata.save();
-        response.status(300).json({ message: 'Record saved' });
+        response.status(200).json({ message: 'Record saved' });
 
     }
     catch (error) {
@@ -79,7 +76,7 @@ app.post('/cnew',upload.single('image1'),async (request,response) => {
         })
         console.log(newdata);
         await newdata.save();
-        response.status(300).json({ message: 'Record saved' });
+        response.status(200).json({ message: 'Record saved' });
 
     }
     catch (error) {
@@ -90,6 +87,24 @@ app.post('/cnew',upload.single('image1'),async (request,response) => {
     
 
 })
+
+app.post('/Loginsearch',async(request,response)=>{
+    const {username,password}=request.body;
+    try{ const user=await data2model.findOne({username,password});
+    if(user)
+    {response.json({success: true,message:'Login Successfully'});}
+    else
+    {response.json({success: false,message:'Invalid Username and email'});}
+    }
+    catch(error)
+    {
+    response.status(500).json({sucess: false,message:'Error'})
+    }
+    })
+    // app.listen(3005,(request,response)=>{
+    // console.log("Port ok")
+    // })
+    
 
 
 
