@@ -40,6 +40,13 @@ app.put('/edit/:id',async (request, response) => {
 
 })
 
+app.delete('/removeworker/:id',async(request,response)=>{
+    let id = request.params.id
+    await Workermodel.findByIdAndDelete(id)
+    response.send("Record deleted")
+    })
+    
+
 
 
 app.post('/new',upload.single('image1'),async (request,response) => {
